@@ -1,8 +1,10 @@
 export class Contrat {
-  constructor(
-    public nom: string,
-    public nom_commercial: string,
-    public code_pays: string,
-    public agglomerations: string[]
-  ) {}
+    nom: string;
+    nom_commercial: string;
+    code_pays: string;
+    agglomerations: string[];
+
+    constructor(values: Object = {}) {
+      Object.assign(this, values);
+    }
 }
