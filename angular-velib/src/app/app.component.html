@@ -1,5 +1,5 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
+<div style="text-align:center" *ngIf="!this.estSelectionne">
   <h1>
     Le service de vélib en Europe :
   </h1>
@@ -18,10 +18,10 @@
     <button class="valider" (click)="this.verifVilleChoisie()">Valider</button>
   </div>
 </div>
-<div class="carte" *ngIf="this.estSelectionne">
+<div *ngIf="this.estSelectionne">
   <app-station
     [contrat]="selection"
-    (changeVille)="changementVille($event)">
+    (changementVille)="changementVille($event)">
   </app-station>
 </div>
 

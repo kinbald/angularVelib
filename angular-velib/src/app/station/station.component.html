@@ -1,1 +1,20 @@
-<div id="map" class="map"></div>
+<div>
+  <h3>
+    Veuillez choisir une station :
+  </h3>
+</div>
+<div>
+  <select #selectStation (change)="stationChoisie(selectStation.value)">
+    <option selected disabled>Choisir une station</option>
+    <option *ngFor="let station of listeStations" [value]="station.name">{{ station.name }}</option>
+  </select>
+</div>
+<div>
+  <button class="valider" (click)="this.verifStationChoisie()">Valider</button>
+  <button class="changement" (click)="this.retour()">Changement de ville</button>
+</div>
+<div *ngIf="this.isSelected">
+  <app-map
+    [station]="stationSelected" [listeStations]="listeStations">
+  </app-map>
+</div>
