@@ -1,23 +1,24 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center" *ngIf="!this.estSelectionne">
-  <h1>
-    Le service de vélib en Europe :
-  </h1>
-  <div>
-    <h3>
-      Veuillez choisir une ville :
-    </h3>
+<section class="jumbotron text-center" *ngIf="!this.estSelectionne">
+  <div class="container">
+    <h1 class="jumbotron-heading">Le service de location de vélos en Europe</h1>
+    <p class="lead text-muted">Outil utilisant l'API JCDecaux pour accéder aux données des stations de vélos.</p>
+    <div class="row justify-content-center">
+      <div class="col-4">
+        <label for="selectContrat">Veuillez choisir une ville :</label>
+        <select #selectContrat (change)="contratChoisi(selectContrat.value)" class="custom-select"
+                id="selectContrat">
+          <option selected disabled>Choisir une ville</option>
+          <option *ngFor="let contrat of contrats" [value]="contrat.name">{{ contrat.name }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-4">
+        <button class="btn btn-primary valider" (click)="this.verifVilleChoisie()">Valider</button>
+      </div>
+    </div>
   </div>
-  <div>
-    <select #selectContrat (change)="contratChoisi(selectContrat.value)">
-      <option selected disabled>Choisir une ville</option>
-      <option *ngFor="let contrat of contrats" [value]="contrat.name">{{ contrat.name }}</option>
-    </select>
-  </div>
-  <div>
-    <button class="valider" (click)="this.verifVilleChoisie()">Valider</button>
-  </div>
-</div>
+</section>
 <div *ngIf="this.estSelectionne">
   <app-station
     [contrat]="selection"

@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  API_ADDR_STATIONS: 'https://api.jcdecaux.com/vls/v1/stations',
+  API_ADDR_CONTRATS: 'https://api.jcdecaux.com/vls/v1/contracts?contracts',
+  API_TOKEN: '9d4a659bfa19ef88c0d7bd9fbe733ec15384df49'
 };
 
 /*

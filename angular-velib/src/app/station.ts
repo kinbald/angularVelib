@@ -28,16 +28,16 @@ export class Station {
     b.lat_rad = (b.position.lat * Math.PI) / 180;
     b.lng_rad = (b.position.lng * Math.PI) / 180;
 
-
     const dist: number = Math.acos(Math.sin(a.lat_rad) * Math.sin(b.lat_rad) + Math.cos(a.lat_rad) *
       Math.cos(b.lat_rad) * Math.cos(a.lng_rad - b.lng_rad)) * 60 * 1.852 * 180 / Math.PI;
-    console.log('distance ' + this.name + ' à ' + a.name + ' : ' + dist);
+    console.log('Distance de ' + this.name + ' à ' + a.name + ' : ' + dist);
     return dist;
   }
 
-  static getStationsProche(a: Station[], b: Station): Station[] {
+  static getStationsAProximite(a: Station[], b: Station): Station[] {
     const newList: Station[] = [];
     a.forEach(function (station) {
+      // Distance de 500 mètres
       if (Station.getDistanceFromStations(station, b) < 0.5) {
         newList.push(station);
       }

@@ -7,7 +7,7 @@ import Point from 'ol/geom/Point.js';
 import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer.js';
 import VectorSource from 'ol/source/Vector.js';
 import OSM from 'ol/source/OSM.js';
-import { fromLonLat } from 'ol/proj';
+import {fromLonLat} from 'ol/proj';
 import {Circle as CircleStyle, Fill, Icon, Stroke, Style} from 'ol/style.js';
 import Overlay from 'ol/Overlay.js';
 
@@ -29,10 +29,11 @@ export class MapComponent implements OnInit, OnChanges {
   map: any;
   estPret = false;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
-    this.listeStationsProches = Station.getStationsProche(this.listeStations, this.station);
+    this.listeStationsProches = Station.getStationsAProximite(this.listeStations, this.station);
     console.log(this.listeStationsProches);
     this.createIcon(this.station, this.listeStationsProches);
     this.addMap();
@@ -43,7 +44,7 @@ export class MapComponent implements OnInit, OnChanges {
     if (this.estPret) {
       this.map.setTarget(null);
       this.map = null;
-      this.listeStationsProches = Station.getStationsProche(this.listeStations, changes.station.currentValue);
+      this.listeStationsProches = Station.getStationsAProximite(this.listeStations, changes.station.currentValue);
       this.createIcon(changes.station.currentValue, this.listeStationsProches);
       this.addMap();
     }
@@ -70,35 +71,35 @@ export class MapComponent implements OnInit, OnChanges {
       }
     });
   }
+
   addMap() {
     const self = this;
     const vectorSource = new VectorSource({
       features: this.iconFeature
     });
-
+    
     const styles = {
-      'root': new Style({
-        image: new CircleStyle({
-          radius: 9,
-          fill: new Fill({color: 'green'}),
-          stroke: new Stroke({
-            color: 'black', width: 2
-          })
+        'root': new Style({
+          image: new Icon(/** {module:ol/style/Icon~Options} */ ({
+            anchor: [0.5, 0],
+            anchorOrigin: 'bottom-left',
+            scale: 0.08,
+            src: 'assets/mainStation.png'
+          }))
+        }),
+        'other': new Style({
+          image: new Icon(/** {module:ol/style/Icon~Options} */ ({
+            anchor: [0.5, 0],
+            anchorOrigin: 'bottom-left',
+            scale: 0.08,
+            src: 'assets/secondaryStation.jpg'
+          }))
         })
-      }),
-      'other': new Style({
-        image: new CircleStyle({
-          radius: 9,
-          fill: new Fill({color: 'yellow'}),
-          stroke: new Stroke({
-            color: 'black', width: 2
-          })
-        })
-      })
-    };
+      }
+    ;
     const vectorLayer = new VectorLayer({
       source: vectorSource,
-      style:  function(feature) {
+      style: function (feature) {
         return styles[feature.get('type')];
       }
     });
@@ -125,9 +126,9 @@ export class MapComponent implements OnInit, OnChanges {
     });
     this.map.addOverlay(popup);
 
-    this.map.on('click', function(evt) {
+    this.map.on('click', function (evt) {
       const feature = self.map.forEachFeatureAtPixel(evt.pixel,
-        function(feat) {
+        function (feat) {
           return feat;
         });
       if (feature) {

@@ -5,6 +5,7 @@ import {Contrat} from './contrat';
 import {Station} from './station';
 import {catchError} from 'rxjs/operators';
 import {throwError} from 'rxjs';
+import {environment} from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +15,15 @@ export class DecauxAPIService {
   constructor(private Http: HttpClient) { }
 
     public recupereContrats(): Observable<Contrat[]> {
-    const result: Observable<Contrat[]> = this.Http.get<Contrat[]>('https://api.jcdecaux.com/vls/v1/contracts?contracts&apiKey=9d4a659bfa19ef88c0d7bd9fbe733ec15384df49');
+    const urlReq = environment.API_ADDR_CONTRATS + `&apiKey=${environment.API_TOKEN}`;
+    const result: Observable<Contrat[]> = this.Http.get<Contrat[]>(urlReq);
     result.pipe(catchError(this.handleError));
     return result;
     }
 
     public recupereStations(nom_contrat: string): Observable<Station[]> {
-    return this.Http.get<Station[]>(`https://api.jcdecaux.com/vls/v1/stations?contract=${nom_contrat}&apiKey=9d4a659bfa19ef88c0d7bd9fbe733ec15384df49`);
+    const urlReq = environment.API_ADDR_STATIONS + `?contract=${nom_contrat}&apiKey=${environment.API_TOKEN}`;
+    return this.Http.get<Station[]>(urlReq);
     }
 
     private handleError(error: HttpErrorResponse) {
