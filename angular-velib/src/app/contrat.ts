@@ -1,8 +1,8 @@
 export class Contrat {
-    nom: string;
-    nom_commercial: string;
-    code_pays: string;
-    agglomerations: string[];
+    name: string;
+    commercial_name: string;
+    country_code: string;
+    cities: string[];
 
     constructor(values: Object = {}) {
       Object.assign(this, values);
